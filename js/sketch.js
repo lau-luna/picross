@@ -1,8 +1,8 @@
 let bg;
 
 function preload() {
-  bg = loadImage('../img/background1.jpg');
-  characterSpriteSheet = loadImage('../img/sprites/miku_spritesheet.png');
+  bg = loadImage('img/background1.jpg');
+  characterSpriteSheet = loadImage('img/sprites/miku_spritesheet.png');
   // miFuente = loadFont('fuente.otf');
 }
 
