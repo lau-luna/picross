@@ -23,6 +23,8 @@ function draw() {
 
   drawCharacter();
 
+  drawControls();
+
 }
 
 function keyPressed() {
@@ -92,10 +94,11 @@ function keyPressed() {
   // V: hint
   if (keyCode === 86) {
   }
-  
+
 }
 
 /// Global variables
+let canPlay = true;
 let mistakes = 0;
 
 /// Color variables
@@ -213,8 +216,8 @@ function completeRow(m, userMatrix, i) {
       return;
   }
   for (let j = 0; j < userMatrix[i].length; j++) {
-      if (userMatrix[i][j] == 0)
-        userMatrix[i][j] = 2;
+    if (userMatrix[i][j] == 0)
+      userMatrix[i][j] = 2;
   }
 }
 
@@ -224,8 +227,8 @@ function completeCol(m, userMatrix, j) {
       return;
   }
   for (let i = 0; i < userMatrix.length; i++) {
-      if (userMatrix[i][j] == 0)
-        userMatrix[i][j] = 2;
+    if (userMatrix[i][j] == 0)
+      userMatrix[i][j] = 2;
   }
 }
 
@@ -245,21 +248,21 @@ function drawMatrixHolder(m) {
   let xOne = xStart - 200;
   let xTwo = xStart;
   let xThree = xStart + m.cellSize * m.solution.length;
-  
+
   let yOne = yStart;
   let yTwo = yStart + 200;
   let yThree = yStart + 200 + m.cellSize * m.solution[0].length;
 
   strokeWeight(6);
   stroke(35, 218, 192);
-  fill(255,255,255);
+  fill(255, 255, 255);
   beginShape();
-  vertex(xOne-padding, yTwo-padding)
-  vertex(xTwo-padding, yTwo-padding)
-  vertex(xTwo-padding, yOne-padding)
-  vertex(xThree+padding, yOne-padding)
-  vertex(xThree+padding, yThree+padding)
-  vertex(xOne-padding, yThree+padding)
+  vertex(xOne - padding, yTwo - padding)
+  vertex(xTwo - padding, yTwo - padding)
+  vertex(xTwo - padding, yOne - padding)
+  vertex(xThree + padding, yOne - padding)
+  vertex(xThree + padding, yThree + padding)
+  vertex(xOne - padding, yThree + padding)
   endShape(CLOSE);
 
   const textPx = m.cellSize / 1.5;
@@ -333,7 +336,7 @@ function drawMatrix(m, userMatrix) {
       fill(fillColor);
 
       square(x, y, m.cellSize);
-      
+
       // Crossed color
       if (userMatrix[i][j] == 2) {
         fill(137, 129, 143);
@@ -387,4 +390,40 @@ function drawCharacter() {
   let xOffset = 512 * j, yOffset = 416 * i;
   image(characterSpriteSheet, 35, 500, 205, 166,  // destino
     3 + 3 * j + xOffset, 3 + 3 * i + yOffset, 512, 416); // source
+}
+
+function drawControls() {
+  let xStart = width - 160, yStart = height / 2 + 80;
+  let y = yStart;
+
+  let buttons = [
+    { letter: "Z", text: "Paint", color: [252, 5, 2] },
+    { letter: "X", text: "Cross", color: [90, 152, 245] },
+    { letter: "C", text: "Check", color: [255, 175, 26] },
+    { letter: "V", text: "Hint", color: [71, 210, 109] },
+  ]
+
+  for (let i = 0; i < buttons.length; i++) {
+    // Z: paint
+    strokeWeight(2);
+    stroke(buttons[i].color);
+    fill(255, 255, 255);
+    rect(xStart, y, 145, 45, 10);
+    fill(buttons[i].color);
+    rect(xStart, y, 45, 45, 10);
+    rect(xStart + 10, y, 35, 45, 0);
+    fill(255, 255, 255);
+    rect(xStart + 5, y + 5, 35, 35, 5);
+    textAlign(LEFT, TOP);
+    textSize(32);
+    fill(buttons[i].color);
+    text(buttons[i].letter, xStart + 11, y + 11);
+    textAlign(LEFT, CENTER);
+    noStroke();
+    textSize(16);
+    fill(55, 39, 130);
+    text(buttons[i].text, xStart + 55, y + 23);
+
+    y += 70;
+  }
 }
